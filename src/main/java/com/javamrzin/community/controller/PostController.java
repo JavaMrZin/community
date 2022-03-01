@@ -4,6 +4,10 @@ import com.javamrzin.community.model.Post;
 import com.javamrzin.community.repository.PostRepository;
 import com.javamrzin.community.validator.PostValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,8 +25,14 @@ public class PostController {
     private final PostValidator postValidator;
 
     @GetMapping({"", "/"})
-    public String list(Model model) {
-        List<Post> posts = postRepository.findAll();
+    public String list(Model model, @PageableDefault(size = 2) Pageable pageable
+            , @RequestParam(required = false, defaultValue = "") String searchText) {
+        //Page<Post> posts = postRepository.findAll(pageable);
+        Page<Post> posts = postRepository.findByTitleContainingOrContentContaining(searchText, searchText, pageable);
+        int startPage = Math.max(1, posts.getPageable().getPageNumber() - 4);
+        int endPage = Math.min(posts.getTotalPages(), posts.getPageable().getPageNumber() + 4);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
         model.addAttribute("posts", posts);
         return "post/list";
     }
