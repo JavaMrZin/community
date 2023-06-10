@@ -4,6 +4,7 @@ import com.javamrzin.community.model.Post;
 import com.javamrzin.community.repository.PostRepository;
 import com.javamrzin.community.validator.PostValidator;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +20,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/posts")
 @RequiredArgsConstructor
+@Slf4j
 public class PostController {
 
     private final PostRepository postRepository;
@@ -27,9 +29,12 @@ public class PostController {
     @GetMapping({"", "/"})
     public String list(Model model, @PageableDefault(size = 2) Pageable pageable
             , @RequestParam(required = false, defaultValue = "") String searchText) {
-        //Page<Post> posts = postRepository.findAll(pageable);
         Page<Post> posts = postRepository.findByTitleContainingOrContentContaining(searchText, searchText, pageable);
-        int startPage = Math.max(1, posts.getPageable().getPageNumber() - 4);
+        log.info("posts = {}", posts);
+        for (Post post : posts) {
+            log.info("post = {}", post);
+        }
+        int startPage = Math.max(posts.getTotalPages(), posts.getPageable().getPageNumber() - 4);
         int endPage = Math.min(posts.getTotalPages(), posts.getPageable().getPageNumber() + 4);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
