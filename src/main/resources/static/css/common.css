@@ -4,13 +4,12 @@
 
 /* Not required for template or sticky footer method. */
 
-main>.container {
+main > .container {
     padding: 60px 15px 0;
 }
 
 
 /* bootstrap css에 빠져있어서 추가함. */
-
 .sr-only {
     position: absolute;
     overflow: hidden;

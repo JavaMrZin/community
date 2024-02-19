@@ -45,3 +45,12 @@ create table
     )
     comment '게시글';
 
+alter table post
+    add user_id bigint not null comment '회원 ID' after id;
+
+alter table post
+    add constraint post_user_id_fk
+        foreign key (user_id) references user (id);
+
+
+

@@ -39,7 +39,7 @@
                     <tr th:each="post : ${posts}">
                         <th th:text="${post.id}">1</th>
                         <td><a th:text="${post.title}" th:href="@{/posts/form(id=${post.id})}">Hello</a></td>
-                        <td>홍길동</td>
+                        <td th:text="${post.user.username}">홍길동</td>
                     </tr>
                     <tr th:if="${posts.totalPages == 0}">
                         <td colspan="3">게시물이 존재하지 않습니다.</td>
