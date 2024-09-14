@@ -1,0 +1,79 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="h-100" lang="ko">
+
+<head th:replace="fragments/common :: head('게시판')">
+    <title>게시판</title>
+</head>
+
+<body class="d-flex flex-column h-100">
+
+    <header>
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" th:replace="fragments/common :: menu('post')">
+        </nav>
+    </header>
+
+    <!-- Begin page content -->
+    <main class="flex-shrink-0">
+        <div class="container">
+            <h1 class="mt-5">게시판</h1>
+            <div>총 건수 : <span th:text="${posts.totalElements}"></span></div>
+
+            <form class="form-inline d-flex justify-content-end" method="GET" th:action="@{/posts}">
+                <div class="form-group mx-sm-3 mb-2">
+                    <label for="searchText" class="sr-only">검색</label>
+                    <input type="text" class="form-control" id="searchText" name="searchText" th:value="${param.searchText}" />
+                </div>
+                <button type="submit" class="btn btn-light mb-2">검색</button>
+            </form>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">번호</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">작성자</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="post : ${posts}">
+                        <th th:text="${post.id}">1</th>
+                        <td><a th:text="${post.title}" th:href="@{/posts/form(id=${post.id})}">Hello</a></td>
+                        <td th:text="${post.user.username}">홍길동</td>
+                    </tr>
+                    <tr th:if="${posts.totalPages == 0}">
+                        <td colspan="3">게시물이 존재하지 않습니다.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <nav aria-label="navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${posts.pageable.pageNumber + 1 <= 1} ? 'disabled'">
+                        <a class="page-link" href="#" th:href="@{/posts(page=${posts.pageable.pageNumber - 1}, searchText=${param.searchText})}">Previous</a>
+                    </li>
+                    <li class="page-item" th:each="i: ${#numbers.sequence(startPage, endPage)}"
+                            th:classappend="${posts.totalPages <= 1 || posts.pageable.pageNumber + 1 == i} ? 'disabled'">
+                        <a class="page-link" href="#" th:href="@{/posts(page=${i - 1}, searchText=${param.searchText})}" th:text="${i}">1</a>
+                    </li>
+                    <li class="page-item" th:classappend="${posts.totalPages <= 1 || posts.pageable.pageNumber + 1 >= posts.totalPages} ? 'disabled'">
+                        <a class="page-link" href="#" th:href="@{/posts(page=${posts.pageable.pageNumber + 1}, searchText=${param.searchText})}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="text-end">
+                <a type="button" class="btn btn-primary" th:href="@{/posts/form}">쓰기</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            <span class="text-muted">Place sticky footer content here.</span>
+        </div>
+    </footer>
+
+</body>
+
+</html>
