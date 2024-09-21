@@ -1,6 +1,6 @@
 package com.javamrzin.community.controller;
 
-import com.javamrzin.community.model.User;
+import com.javamrzin.community.entity.User;
 import com.javamrzin.community.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/account")
-public class AccountController {
+public class AccountWebController {
 
     private final UserService userService;
 

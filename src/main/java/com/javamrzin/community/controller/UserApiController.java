@@ -1,10 +1,9 @@
 package com.javamrzin.community.controller;
 
-import com.javamrzin.community.model.Post;
-import com.javamrzin.community.model.User;
+import com.javamrzin.community.entity.Post;
+import com.javamrzin.community.entity.User;
 import com.javamrzin.community.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

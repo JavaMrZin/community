@@ -1,6 +1,6 @@
 package com.javamrzin.community.controller;
 
-import com.javamrzin.community.model.Post;
+import com.javamrzin.community.entity.Post;
 import com.javamrzin.community.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.util.StringUtils;

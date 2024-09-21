@@ -1,12 +1,15 @@
 package com.javamrzin.community.repository;
 
-import com.javamrzin.community.model.User;
+import com.javamrzin.community.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
+
+    Boolean existsByUsername(String username);
+
     User findByUsername(String username);
 
     @Query("select u from User u where u.username like %?1%")

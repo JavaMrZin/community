@@ -1,14 +1,15 @@
-package com.javamrzin.community.model;
+package com.javamrzin.community.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Data
+@Table(name = "user")
 public class User {
 
     @Id
@@ -17,12 +18,11 @@ public class User {
 
     private String username;
 
-    @JsonIgnore
     private String password;
 
     private Boolean enabled;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role"
             , joinColumns = @JoinColumn(name = "user_id")
             , inverseJoinColumns = @JoinColumn(name = "role_id"))

@@ -1,6 +1,6 @@
 package com.javamrzin.community.controller;
 
-import com.javamrzin.community.model.Post;
+import com.javamrzin.community.entity.Post;
 import com.javamrzin.community.repository.PostRepository;
 import com.javamrzin.community.service.PostService;
 import com.javamrzin.community.validator.PostValidator;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/posts")

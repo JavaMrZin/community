@@ -1,6 +1,6 @@
 package com.javamrzin.community.validator;
 
-import com.javamrzin.community.model.Post;
+import com.javamrzin.community.entity.Post;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
@@ -17,8 +17,8 @@ public class PostValidator implements Validator {
     @Override
     public void validate(Object obj, Errors errors) {
         Post p = (Post) obj;
-        if ( ! StringUtils.hasText(p.getContent()) ) {
-            errors.rejectValue("content",null, "내용을 입력하세요");
+        if (!StringUtils.hasText(p.getContent())) {
+            errors.rejectValue("content", null, "내용을 입력하세요");
         }
     }
 }
